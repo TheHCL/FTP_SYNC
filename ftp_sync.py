@@ -21,7 +21,7 @@ def list_ftp_files(path,ftp_addr,ftp_user,ftp_pass):
 				
 
 				ftp_file = x+"/"+m
-				if ftp_file[-4::] in test_extension: # file_extension
+				if ftp_file[-4::] in file_extension: # file_extension
 
 				
 					logger.info("[Found]"+ftp_file)
@@ -74,10 +74,6 @@ def compare():
 		latest_dict=json.load(b)
 	text = ""
 	
-	# for x,y in latest_dict.items():
-	# 	if x not in last_dict.keys() or y!=last_dict[x]:
-	# 		logger.info("[DIFF]"+x)
-	# 		text+=x+"\n"
 
 	for key in latest_dict.keys():
 		if key in last_dict and latest_dict[key] == last_dict[key]:

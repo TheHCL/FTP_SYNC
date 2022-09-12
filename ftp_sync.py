@@ -74,10 +74,17 @@ def compare():
 		latest_dict=json.load(b)
 	text = ""
 	
-	for x,y in latest_dict.items():
-		if x not in last_dict.keys() or y!=last_dict[x]:
-			logger.info("[DIFF]"+x)
-			text+=x+"\n"
+	# for x,y in latest_dict.items():
+	# 	if x not in last_dict.keys() or y!=last_dict[x]:
+	# 		logger.info("[DIFF]"+x)
+	# 		text+=x+"\n"
+
+	for key in latest_dict.keys():
+		if key in last_dict and latest_dict[key] == last_dict[key]:
+			pass
+		else:
+			logger.info("[DIFF]"+key)
+			text+=key+"\n"
 			
 
 	f=open("download.txt","w")
@@ -152,6 +159,11 @@ if __name__ == "__main__":
 	txt_info = ["ftp address:","ftp user name:","ftp password:","remote directory path:","local store path:"]
 
 	
+	
+	if os.path.exists("ftp_mod_old.json"):
+		os.remove("ftp_mod_old.json")
+	if os.path.exists("download.txt"):
+		os.remove("download.txt")
 
 	if os.path.exists("ftp_modify.txt") == False:
 		create_txt = open("ftp_modify.txt","w")
@@ -189,7 +201,7 @@ if __name__ == "__main__":
 				gen_mod_time(ftp_addr,ftp_user,ftp_pass)
 				compare()
 				download_files(path,dest,ftp_addr,ftp_user,ftp_pass)
-				os.remove("ftp_mod_old.json")
+				
 			else:
 				list_ftp_files(path,ftp_addr,ftp_user,ftp_pass)
 				gen_mod_time(ftp_addr,ftp_user,ftp_pass)
